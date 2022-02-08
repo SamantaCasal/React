@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina React</title>
+    <style>
+        picture {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        width: 100px;   
+    }
+    picture.is-small {
+        width: 50px;
+    }
+    picture.is-large{
+        width: 200px;
+    }
+    img {
+        box-shadow: 0 0 15px #999;
+        border-radius: 50%;
+        width: 100%;
+    }
+    img.disabled{
+        opacity: 0.3;
+    }
+    i {
+        align-content: center;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        min-height: 50px;
+        display: block;
+        width: 100%;
+    }
+    div{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 24px;
+    }   
+    </style>
+    <!-- Esto es la libreria react -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!-- Esto es el DOM tiene todo el codigo -->
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Esto es para JSX -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+    <h1>Pagina React</h1>
+    <div id='app'></div>
+
+    <script type="text/babel">
+        const $app = document.getElementById('app')
+
+        // const h = React.createElement // Guardo una variable "h" que me permite crear elementos con React esto sirve solo si no usamos JSX
+
+        const useState = React.useState //Sirve para crear un estado a nuestro componente//
+
+
+        const Avatar = props => {
+            // Le digo cual es el valor inicial de nuestro componente
+            const [enabled, setEnabled] = useState(true)
+
+            const src = `https://randomuser.me/api/portraits/women/${props.id}.jpg`;
+
+            let pictureClassName = '';
+            if(props.size === 'small'){
+                pictureClassName = 'is-small';
+            }else if(props.size === 'large'){
+                pictureClassName = 'is-large'
+            }
+
+           
+            const imgClassName = enabled ? ' ' : 'disabled';
+
+            return (
+                <picture className={pictureClassName}>
+                    <img onClick={() => setEnabled(!enabled)} className={imgClassName} src={src} />
+                    <strong>{props.name} </strong>
+                </picture>
+            )
+        };
+
+        ReactDOM.render(
+            <div>
+                <Avatar id={12} name="Emma" size = 'small' />
+                <Avatar id={22} name="Mani" />
+                <Avatar id={32} name="Juana" size = 'large' />
+            </div>,
+            $app
+        );
+
+
+
+
+
+    //     $app.querySelectorAll('img').forEach(img =>{
+    //         img.addEventListener('click', () =>{
+    //             img.classList.toggle('disabled')
+    //         })
+    //     })
+
+    </script>
+</body>
+
+</html>
+
+
+
+<!-- Esto es sin React
+    <body>
+    <h1>Pagina React</h1>
+    <div id='app'></div>
+    <script>
+        const $app = document.getElementById('app')
+        const Avatar = params => {
+            const src = `https://randomuser.me/api/portraits/women/${params.id}.jpg`
+            return ` <picture>
+        <img src="${src}" />
+        <em>${params.name}</em>
+    </picture>`;
+        };
+
+        $app.innerHTML += Avatar({id: 3, name: 'Flor'});
+        $app.innerHTML += Avatar({ id: 38, name: 'Lola'})
+
+        $app.querySelectorAll('img').forEach(img =>{
+            img.addEventListener('click', () =>{
+                img.classList.toggle('disabled')
+            })
+        })
+
+    </script>
+</body> -->
